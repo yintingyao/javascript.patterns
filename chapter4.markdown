@@ -1,5 +1,7 @@
 # 函数
 
+jsjssjsjsjsjs
+
 熟练运用函数是JavaScript程序员的必备技能，因为在JavaScript中函数实在是太常用了。它能够完成的任务种类非常之多，而在其他语言中则需要很多特殊的语法支持才能达到这种能力。
 
 在本章将会介绍在JavaScript中定义函数的多种方式，包括函数表达式和函数声明、以及局部作用域和变量声明提前的工作原理。然后会介绍一些有用的模式，帮助你设计API（为你的函数提供更好的接口）、搭建代码架构（使用尽可能少的全局对象）、并优化性能（避免不必要的操作）。
@@ -77,13 +79,13 @@ JavaScript的函数具有两个主要特性，正是这两个特性让它们与�
 		// I am an unnamed function expression
 		// also known as an anonymous function
 	});
-
+	
 	// this is a named function expression
 	callMe(function me() {
 		// I am a named function expression
 		// and my name is "me"
 	});
-
+	
 	// another function expression
 	var myobject = {
 		say: function () {
@@ -95,7 +97,7 @@ JavaScript的函数具有两个主要特性，正是这两个特性让它们与�
 
 	// global scope
 	function foo() {}
-
+	
 	function local() {
 		// local scope
 		function bar() {}
@@ -109,7 +111,7 @@ JavaScript的函数具有两个主要特性，正是这两个特性让它们与�
 	function foo() {} // declaration
 	var bar = function () {}; // expression
 	var baz = function baz() {}; // named expression
-
+	
 	foo.name; // "foo"
 	bar.name; // ""
 	baz.name; // "baz"
@@ -130,7 +132,7 @@ JavaScript的函数具有两个主要特性，正是这两个特性让它们与�
 
 	// antipattern
 	// for illustration only
-
+	
 	// global functions
 	function foo() {
 		alert('global foo');
@@ -138,22 +140,22 @@ JavaScript的函数具有两个主要特性，正是这两个特性让它们与�
 	function bar() {
 		alert('global bar');
 	}
-
+	
 	function hoistMe() {
-
+	
 		console.log(typeof foo); // "function"
 		console.log(typeof bar); // "undefined"
-
+	
 		foo(); // "local foo"
 		bar(); // TypeError: bar is not a function
-
+	
 		// function declaration:
 		// variable 'foo' and its implementation both get hoisted
-
+	
 		function foo() {
 			alert('local foo');
 		}
-
+	
 		// function expression:
 		// only variable 'bar' gets hoisted
 		// not the implementation
@@ -179,11 +181,11 @@ JavaScript的函数具有两个主要特性，正是这两个特性让它们与�
 		callback();
 		// ...
 	}
-
+	
 	function introduceBugs() {
 		// ... make bugs
 	}
-
+	
 	writeCode(introduceBugs);
 
 注意introduceBugs()是如何作为参数传入writeCode()的，当作参数的函数不带括号。括号的意思是执行函数，而这里我们希望传入一个引用，让writeCode()在合适的时机执行它（调用它）。
@@ -212,7 +214,7 @@ JavaScript的函数具有两个主要特性，正是这两个特性让它们与�
 			nodes[i].style.display = "none";
 		}
 	};
-
+	
 	// executing the functions
 	hide(findNodes());
 
@@ -230,14 +232,14 @@ JavaScript的函数具有两个主要特性，正是这两个特性让它们与�
 		}
 		while (i) {
 			i -= 1;
-
+	
 			// complex logic here...
-
+	
 			// now callback:
 			if (callback) {
 				callback(found);
 			}
-
+	
 			nodes.push(found);
 		}
 		return nodes;
@@ -251,7 +253,7 @@ JavaScript的函数具有两个主要特性，正是这两个特性让它们与�
 	var hide = function (node) {
 		node.style.display = "none";
 	};
-
+	
 	// find the nodes and hide them as you go
 	findNodes(hide);
 
@@ -317,11 +319,11 @@ JavaScript的函数具有两个主要特性，正是这两个特性让它们与�
 在findNodes()中的逻辑则需要修改为：
 
 	var findNodes = function (callback, callback_obj) {
-
+	
 		if (typeof callback === "string") {
 			callback = callback_obj[callback];
 		}
-
+	
 		//...
 		if (typeof callback === "function") {
 			callback.call(callback_obj, found);
@@ -366,7 +368,7 @@ JavaScript中的回调模式已经是我们的家常便饭了，比如，如果�
 			alert(2);
 		};
 	};
-
+	
 	// using the setup function
 	var my = setup(); // alerts 1
 	my(); // alerts 2
@@ -379,7 +381,7 @@ JavaScript中的回调模式已经是我们的家常便饭了，比如，如果�
 			return (count += 1);
 		};
 	};
-
+	
 	// usage
 	var next = setup();
 	next(); // returns 1
@@ -418,25 +420,25 @@ JavaScript中的回调模式已经是我们的家常便饭了，比如，如果�
 
 	// 1. adding a new property
 	scareMe.property = "properly";
-
+	
 	// 2. assigning to a different name
 	var prank = scareMe;
-
+	
 	// 3. using as a method
 	var spooky = {
 		boo: scareMe
 	};
-
+	
 	// calling with a new name
 	prank(); // "Boo!"
 	prank(); // "Boo!"
 	console.log(prank.property); // "properly"
-
+	
 	// calling as a method
 	spooky.boo(); // "Boo!"
 	spooky.boo(); // "Boo!"
 	console.log(spooky.boo.property);
-
+	
 	// "properly"
 	// using the self-defined function
 	scareMe(); // Double boo!
